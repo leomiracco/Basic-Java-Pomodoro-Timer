@@ -16,6 +16,8 @@ public interface IView {
 	
 	public JButton getButtonResetRest();
 	
+	public JButton getButtonResetAll();
+	
 	public void setChangeNamePlayPauseButton();
 	
 	public void setHoursTimer(String hours);

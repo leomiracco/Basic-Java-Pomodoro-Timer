@@ -4,22 +4,22 @@ import utilities.Alarm;
 
 public class AlarmStoppedRestTimerState implements ITimerState {
 
-	private PomodoroTimer timer;
+	private PomodoroTimer pomodoroTimer;
 	private boolean stop;
 	
 	public AlarmStoppedRestTimerState(PomodoroTimer timer) {
-		this.timer = timer; 
+		this.pomodoroTimer = timer; 
 		this.stop = true;
 	}
 
 	@Override
 	public void waitingInstructionsState() {
-		this.timer.setState(new WaitingInstructionsState(this.timer));
+		this.pomodoroTimer.setState(new WaitingInstructionsState(this.pomodoroTimer));
 	}
 
 	@Override
 	public void startedMainTimerState() {
-		this.timer.setState(new StartedMainTimerState(this.timer));
+		this.pomodoroTimer.setState(new StartedMainTimerState(this.pomodoroTimer));
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public class AlarmStoppedRestTimerState implements ITimerState {
 		if(this.stop) {
 			this.stop = !this.stop;
 			Alarm.getInstance().turnOffAlarm();
-			this.timer.updateTimer("AlarmRestStopped");	
+			this.pomodoroTimer.updateTimer("AlarmRestStopped");	
 		}
 	}
 

@@ -12,6 +12,9 @@ import javax.swing.SwingConstants;
 
 import java.awt.Font;
 import javax.swing.JButton;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import java.awt.Dimension;
 
 public class View extends JFrame implements IView{
 
@@ -42,15 +45,21 @@ public class View extends JFrame implements IView{
 	private JPanel panelSouth;
 	private JPanel panel;
 	private JPanel panel_1;
+	private JPanel panel_2;
+	private JLabel lblCreator;
 	private JLabel lblStateTittle;
 	private JLabel lblInfoState;
+	private JButton btnResetAll;
 	private JLabel lblNewLabel;
+	private JLabel lblNewLabel_1;
+	private JPanel panel_3;
+	private JPanel panel_4;
 
 	public View() {
 		setResizable(false);
 		setTitle("Pomodoro");		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 451, 389);
 		setLocationRelativeTo(null);
 		JPanel contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -175,29 +184,54 @@ public class View extends JFrame implements IView{
 		
 		this.panelSouth = new JPanel();
 		contentPane.add(this.panelSouth);
-		this.panelSouth.setLayout(new GridLayout(2, 1, 0, 0));
+		this.panelSouth.setLayout(new GridLayout(5, 1, 0, 0));
 		
 		this.panel = new JPanel();
+		this.panel.setMinimumSize(new Dimension(10, 50));
 		this.panelSouth.add(this.panel);
-		this.panel.setLayout(new GridLayout(1, 2, -300, 0));
-		
-		this.lblStateTittle = new JLabel("Estado:");
-		this.lblStateTittle.setHorizontalTextPosition(SwingConstants.CENTER);
-		this.lblStateTittle.setHorizontalAlignment(SwingConstants.CENTER);
-		this.panel.add(this.lblStateTittle);
-		
-		this.lblInfoState = new JLabel("En espera...");
-		this.lblInfoState.setHorizontalAlignment(SwingConstants.CENTER);
-		this.panel.add(this.lblInfoState);
+		this.panel.setLayout(new GridLayout(1, 3, 0, 0));
 		
 		this.panel_1 = new JPanel();
 		this.panelSouth.add(this.panel_1);
-		this.panel_1.setLayout(new GridLayout(1, 1, 0, 0));
+		this.panel_1.setLayout(new GridLayout(1, 3, 0, 0));
 		
-		this.lblNewLabel = new JLabel("By Leo");
-		this.lblNewLabel.setHorizontalTextPosition(SwingConstants.CENTER);
-		this.lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		this.lblNewLabel_1 = new JLabel("");
+		this.lblNewLabel_1.setEnabled(false);
+		this.panel_1.add(this.lblNewLabel_1);
+		
+		this.btnResetAll = new JButton("Reset All");
+		this.btnResetAll.addActionListener(Controller.getInstance());
+		this.btnResetAll.setHorizontalTextPosition(SwingConstants.CENTER);
+		this.panel_1.add(this.btnResetAll);
+		
+		this.lblNewLabel = new JLabel("");
+		this.lblNewLabel.setEnabled(false);
 		this.panel_1.add(this.lblNewLabel);
+		
+		this.panel_2 = new JPanel();
+		this.panelSouth.add(this.panel_2);
+		this.panel_2.setLayout(new GridLayout(1, 1, -300, 0));
+		
+		this.panel_3 = new JPanel();
+		this.panelSouth.add(this.panel_3);
+		this.panel_3.setLayout(new GridLayout(1, 1, -300, 0));
+		
+		this.lblStateTittle = new JLabel("Estado:");
+		this.panel_3.add(this.lblStateTittle);
+		this.lblStateTittle.setHorizontalTextPosition(SwingConstants.CENTER);
+		this.lblStateTittle.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		this.lblInfoState = new JLabel("En espera...");
+		this.panel_3.add(this.lblInfoState);
+		this.lblInfoState.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		this.panel_4 = new JPanel();
+		this.panelSouth.add(this.panel_4);
+		
+		this.lblCreator = new JLabel("By Leo");
+		this.panel_4.add(this.lblCreator);
+		this.lblCreator.setHorizontalTextPosition(SwingConstants.CENTER);
+		this.lblCreator.setHorizontalAlignment(SwingConstants.CENTER);
 	}
 
 	@Override
@@ -228,6 +262,11 @@ public class View extends JFrame implements IView{
 	@Override
 	public JButton getButtonResetRest() {
 		return this.btnResetRest;
+	}
+	
+	@Override
+	public JButton getButtonResetAll() {
+		return this.btnResetAll;
 	}
 
 	@Override
@@ -281,11 +320,13 @@ public class View extends JFrame implements IView{
 		this.btnPlayRest.setEnabled(false);
 		this.btnAlarmRest .setEnabled(false);
 		this.btnResetRest.setEnabled(false);
+		this.btnResetAll.setEnabled(false);
 	}
 
 	@Override
 	public void enableButtonsMainTimerStarted() {
 		this.btnReset.setEnabled(true);
+		this.btnResetAll.setEnabled(true);
 	}
 
 	@Override

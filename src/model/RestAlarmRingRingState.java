@@ -7,18 +7,17 @@ import utilities.Alarm;
 
 public class RestAlarmRingRingState implements ITimerState, ItemListener {
 
-	private PomodoroTimer timer;
+	private PomodoroTimer pomodoroTimer;
 	private boolean alarm;
 	
 	public RestAlarmRingRingState(PomodoroTimer timer) {
-		this.timer = timer;
+		this.pomodoroTimer = timer;
 		this.alarm = true;
 	}
 
 	@Override
 	public void itemStateChanged(ItemEvent e) {
-		// TODO Auto-generated method stub
-
+		this.pomodoroTimer.setState(new WaitingInstructionsState(this.pomodoroTimer));
 	}
 
 	@Override
@@ -65,7 +64,7 @@ public class RestAlarmRingRingState implements ITimerState, ItemListener {
 
 	@Override
 	public void alarmStoppedRestTimerState() {
-		this.timer.setState(new AlarmStoppedRestTimerState(this.timer));
+		this.pomodoroTimer.setState(new AlarmStoppedRestTimerState(this.pomodoroTimer));
 	}
 
 	@Override
@@ -98,7 +97,7 @@ public class RestAlarmRingRingState implements ITimerState, ItemListener {
 			Alarm.getInstance().soundAlarm();
 			this.alarm = !this.alarm;
 		}
-		this.timer.updateTimer("AlarmRingRing");
+		this.pomodoroTimer.updateTimer("AlarmRingRing");
 	}
 	
 	@Override

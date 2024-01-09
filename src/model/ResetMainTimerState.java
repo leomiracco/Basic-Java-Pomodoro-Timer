@@ -2,21 +2,20 @@ package model;
 
 public class ResetMainTimerState implements ITimerState {
 
-	private PomodoroTimer timer;
+	private PomodoroTimer pomodoroTimer;
 	
 	public ResetMainTimerState(PomodoroTimer timer) {
-		this.timer = timer;
+		this.pomodoroTimer = timer;
 	}
 
 	@Override
 	public void waitingInstructionsState() {
-		// TODO Auto-generated method stub
-
+		this.pomodoroTimer.setState(new WaitingInstructionsState(this.pomodoroTimer));
 	}
 
 	@Override
 	public void startedMainTimerState() {
-		this.timer.setState(new StartedMainTimerState(this.timer));
+		this.pomodoroTimer.setState(new StartedMainTimerState(this.pomodoroTimer));
 	}
 
 	@Override

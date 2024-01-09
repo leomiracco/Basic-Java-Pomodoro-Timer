@@ -2,16 +2,15 @@ package model;
 
 public class ResetRestTimerState implements ITimerState {
 
-	private PomodoroTimer timer;
+	private PomodoroTimer pomodoroTimer;
 	
 	public ResetRestTimerState(PomodoroTimer timer) {
-		this.timer = timer;
+		this.pomodoroTimer = timer;
 	}
 
 	@Override
 	public void waitingInstructionsState() {
-		// TODO Auto-generated method stub
-
+		this.pomodoroTimer.setState(new WaitingInstructionsState(this.pomodoroTimer));
 	}
 
 	@Override
@@ -22,7 +21,7 @@ public class ResetRestTimerState implements ITimerState {
 
 	@Override
 	public void startedRestTimerState() {
-		this.timer.setState(new StartedRestTimerState(this.timer));
+		this.pomodoroTimer.setState(new StartedRestTimerState(this.pomodoroTimer));
 	}
 
 	@Override

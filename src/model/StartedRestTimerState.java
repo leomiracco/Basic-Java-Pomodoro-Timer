@@ -19,7 +19,7 @@ public class StartedRestTimerState implements ITimerState {
 
 	@Override
 	public void waitingInstructionsState() {
-		//this.timer.setState(new WaitingInstructionsState(this.timer));
+		this.pomodoroTimer.setState(new WaitingInstructionsState(this.pomodoroTimer));
 	}
 
 	@Override

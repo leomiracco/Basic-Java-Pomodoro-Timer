@@ -2,20 +2,20 @@ package model;
 
 public class PausedMainTimerState implements ITimerState{
 
-	private PomodoroTimer timer;
+	private PomodoroTimer pomodoroTimer;
 	
 	public PausedMainTimerState(PomodoroTimer timer) {
-		this.timer = timer;
+		this.pomodoroTimer = timer;
 	}
 	
 	@Override
 	public void waitingInstructionsState() {
-		//this.timer.setState(new WaitingInstructionsState(this.timer));
+		this.pomodoroTimer.setState(new WaitingInstructionsState(this.pomodoroTimer));
 	}
 	
 	@Override
 	public void startedMainTimerState() {
-		this.timer.setState(new StartedMainTimerState(this.timer));
+		this.pomodoroTimer.setState(new StartedMainTimerState(this.pomodoroTimer));
 	}
 		
 	@Override
@@ -48,7 +48,7 @@ public class PausedMainTimerState implements ITimerState{
 	
 	@Override
 	public void resetMainTimerState() {
-		this.timer.setState(new ResetMainTimerState(this.timer));
+		this.pomodoroTimer.setState(new ResetMainTimerState(this.pomodoroTimer));
 	}
 	
 	@Override

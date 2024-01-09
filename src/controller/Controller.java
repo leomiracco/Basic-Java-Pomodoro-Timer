@@ -118,6 +118,23 @@ public class Controller extends Thread implements ActionListener, Observer{
 				this.resetRestTimer();
 			}
 		}
+			
+		if(e.getSource() == this.iview.getButtonResetAll()) {
+			if(PomodoroTimer.getInstance().getState().toString().equals("StartedRestTimerState")) {
+				this.iview.setChangeNamePlayPauseButtonRest();
+			}else if(PomodoroTimer.getInstance().getState().toString().equals("StartedMainTimerState")) {
+				this.iview.setChangeNamePlayPauseButton();
+			}else if(PomodoroTimer.getInstance().getState().toString().equals("MainAlarmRingRingState")) {
+				PomodoroTimer.getInstance().alarmStoppedMainTimerState();
+			}else if(PomodoroTimer.getInstance().getState().toString().equals("RestAlarmRingRingState")) {
+				PomodoroTimer.getInstance().alarmStoppedRestTimerState();
+			}	
+			PomodoroTimer.getInstance().waitingInstructionsState();
+			this.resetAllTimer();
+			this.iview.showState("En espera...");
+			this.iview.disableStopButtonAlarmRestTimer();
+			this.iview.disableHomeButtons();
+		}
 		
 	}
 
