@@ -146,10 +146,21 @@ public class PomodoroTimer extends Observable implements Runnable, ActionListene
 	}
 
 	@Override
-	public void run() {
+	public synchronized void run() {
+		final int NS_POR_SEGUNDO = 1000000000; // nanoSegundos
+		//final int NS_POR_SEGUNDO = 1000; // MiliSegundos
+		//final int MEDIO_MILLISECONDS = NS_POR_SEGUNDO / 2;
+		final int MEDIO_MILLISECONDS = NS_POR_SEGUNDO / 16;
+		//final int APS_OBJETIVO = 1500;
+		//final double NS_POR_ACTUALIZACION = NS_POR_SEGUNDO / APS_OBJETIVO;
+		
+		long start_time = System.nanoTime();
 		while(this.play) {
-			this.iTimerState.task();
-			System.out.print("");
+			//System.out.print("");
+			if(System.nanoTime() - start_time >= MEDIO_MILLISECONDS) {
+				this.iTimerState.task();
+				start_time = System.nanoTime();
+			}
 		}
 	}
 	

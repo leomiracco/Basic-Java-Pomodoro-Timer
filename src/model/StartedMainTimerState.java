@@ -6,7 +6,7 @@ public class StartedMainTimerState implements ITimerState{
 
 	private PomodoroTimer pomodoroTimer;
 	private int hours, minutes, seconds, milliSeconds;
-	private long totalMilliSeconds, start_time, future_time, elapsed_time;
+	private long totalNanoSeconds, totalMilliSeconds, start_time, future_time, elapsed_time;
 	private boolean once;
 	
 	public StartedMainTimerState(PomodoroTimer timer) {
@@ -78,15 +78,24 @@ public class StartedMainTimerState implements ITimerState{
 
 	public void task() {
 		if(this.once) {
+			// 1 seg = 1000000000 (mil millones de nanosegundos).
 			this.once = !this.once;
 			this.totalMilliSeconds = (this.hours * 3600000) + (this.minutes * 60000) + (this.seconds * 1000) + this.milliSeconds;
+			//this.totalNanoSeconds = (this.hours * 3600000000000L) + (this.minutes * 60000000000L) + (this.seconds * 1000000000) + (this.milliSeconds * 1000000);
+			
 			this.start_time = System.currentTimeMillis();
-			this.future_time = this.start_time + TimeUnit.MILLISECONDS.toMillis(this.totalMilliSeconds);
+			//this.start_time = System.nanoTime();
+			
+			//this.future_time = this.start_time + TimeUnit.MILLISECONDS.toMillis(this.totalMilliSeconds);
+			this.future_time = Math.addExact(this.start_time, this.totalMilliSeconds);
+			//this.future_time = Math.addExact(this.start_time, this.totalNanoSeconds);
+			
 			this.elapsed_time = 23;
 		}
 		
 		if(this.elapsed_time > 0) {
 			this.start_time = System.currentTimeMillis();
+			//this.start_time = System.nanoTime();
 			//this.elapsed_time = (this.future_time - this.start_time) / 1000;
 			this.elapsed_time = (this.future_time - this.start_time);
 			
@@ -94,6 +103,10 @@ public class StartedMainTimerState implements ITimerState{
 			this.pomodoroTimer.setSeconds((int) ((this.elapsed_time / 1000) % 60));
 			this.pomodoroTimer.setMinutes((int) ((this.elapsed_time / 60000) % 60));
 			this.pomodoroTimer.setHours((int) (this.elapsed_time / 3600000));
+//			this.pomodoroTimer.setMilliSeconds((int) ((this.elapsed_time / 1000000) % 1000));
+//			this.pomodoroTimer.setSeconds((int) ((this.elapsed_time / 1000000000) % 60));
+//			this.pomodoroTimer.setMinutes((int) ((this.elapsed_time / 60000000000L) % 60));
+//			this.pomodoroTimer.setHours((int) (this.elapsed_time / 3600000000000L));
 			this.pomodoroTimer.updateTimer("MainTimer");
 		}else {
 			this.pomodoroTimer.updateTimer("TimerFinished");

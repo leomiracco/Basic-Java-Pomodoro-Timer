@@ -194,12 +194,19 @@ public class Controller extends Thread implements ActionListener, Observer{
 	}
 
 	@Override
-	public void run() {
+	public synchronized void run() {
+		final int NS_POR_SEGUNDO = 1000000000; // nanoSegundos
+		final int MEDIO_MILLISECONDS = NS_POR_SEGUNDO / 17;
+		long start_time = System.nanoTime();
+		
 		while(this.start) {
-			if(this.situation.equals("MainTimer")) {
-				this.mainTimer();
-			}else {
-				this.restTimer();			
+			if(System.nanoTime() - start_time >= MEDIO_MILLISECONDS) {
+				if(this.situation.equals("MainTimer")) {
+					this.mainTimer();
+				}else {
+					this.restTimer();			
+				}
+				start_time = System.nanoTime();
 			}
 		}
 	}

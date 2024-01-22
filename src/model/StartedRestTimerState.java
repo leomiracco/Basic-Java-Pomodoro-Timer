@@ -84,7 +84,8 @@ public class StartedRestTimerState implements ITimerState {
 			this.once = !this.once;
 			this.totalMilliSeconds = (this.minutesRest * 60000) + (this.secondsRest * 1000) + this.milliSecondsRest;
 			this.start_time = System.currentTimeMillis();
-			this.future_time = this.start_time + TimeUnit.MILLISECONDS.toMillis(this.totalMilliSeconds);
+			//this.future_time = this.start_time + TimeUnit.MILLISECONDS.toMillis(this.totalMilliSeconds);
+			this.future_time = Math.addExact(this.start_time, this.totalMilliSeconds);
 			this.elapsed_time = 23;
 		}
 		
